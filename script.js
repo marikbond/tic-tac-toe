@@ -3,41 +3,46 @@ var x = 'X';
 var o = 'O';
 var nextSymbol = x;
 
-var gameField = document.createElement('table');
-gameField.id = "game-field";
-gameField.onclick = fieldClickHandler;
-for (var i = 0; i < 3; i++) {
-    var tableRow = document.createElement('tr');
-    for (var j = 0; j < 3; j++) {
-        var td = document.createElement('td');
-        td.dataset.row = i;
-        td.dataset.col = j;
-        tableRow.appendChild(td);
+var gameField = createGameField();
+gameField.onclick = turnHandler(event);
+function createGameField(field) {
+    var gameField = document.createElement('table');
+    gameField.id = "game-field";
+    for (var i = 0; i < 3; i++) {
+        var tableRow = document.createElement('tr');
+        for (var j = 0; j < 3; j++) {
+            var td = document.createElement('td');
+            td.dataset.row = i;
+            td.dataset.col = j;
+            tableRow.appendChild(td);
+        }
+        gameField.appendChild(tableRow);
     }
-    gameField.appendChild(tableRow);
+    var gameFieldContainer = document.getElementById('game-field-container');
+    gameFieldContainer.appendChild(gameField);
 }
-var gameFieldContainer = document.getElementById('game-field-container');
-gameFieldContainer.appendChild(gameField);
-
-function fieldClickHandler(event) {
+function turnHandler(event) {
     var target = event.target;
     while (target != gameField) {
          if (target.tagName == 'TD') {
-             console.log('good job');
+             chooseTheSymbol();
              break;
          }
          target = target.parentNode;
     }
+    return false;
+}
+
+function chooseTheSymbol() {
     console.log('row: ' + target.dataset.row + ' col: ' + target.dataset.col);
     if (!target.innerHTML) {
         target.innerHTML = nextSymbol;
         nextSymbol = target.innerHTML == x ? o : x;
-        var victory = checkTheWin(target.innerHTML);
+        var victory = checkTheWin(target.innerHTML.parentNode);
         if (victory) {
             handleWinner(target.innerHTML);
         }
     }
-    return false;
 }
 
 // TODO 2 на основании dataset написать алгоритм перебора ячеек для поиска победит
@@ -55,7 +60,7 @@ function handleWinner(symbol) {
 
 var resetButton = document.getElementById('reset-button');
 resetButton.onclick = function () {
-    gameField.onclick = fieldClickHandler;
+    gameField.onclick = turnHandler;
     var tdList = gameField.getElementsByTagName('td');
     for (var i = 0; i < tdList.length; i++) {
         tdList[i].innerHTML = '';
@@ -63,7 +68,7 @@ resetButton.onclick = function () {
     gameField.className = '';
 };
 
-function checkTheWin(target) {
+function checkTheWin() {
     var rowNum = target.dataset.row;
 }
 
