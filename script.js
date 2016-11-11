@@ -4,8 +4,20 @@ var o = 'O';
 var nextSymbol = x;
 
 var gameField = createGameField();
-gameField.onclick = turnHandler(event);
-function createGameField(field) {
+
+gameField.onclick = function(event) {
+    var cell = event.target;
+    while (cell != gameField) {
+        if (cell.tagName == 'TD') {
+            turnHandler(cell);
+            break;
+        }
+        cell = cell.parentNode;
+    }
+    return false;
+};
+
+function createGameField() {
     var gameField = document.createElement('table');
     gameField.id = "game-field";
     for (var i = 0; i < 3; i++) {
@@ -18,37 +30,24 @@ function createGameField(field) {
         }
         gameField.appendChild(tableRow);
     }
-    var gameFieldContainer = document.getElementById('game-field-container');
-    gameFieldContainer.appendChild(gameField);
-}
-function turnHandler(event) {
-    var target = event.target;
-    while (target != gameField) {
-         if (target.tagName == 'TD') {
-             chooseTheSymbol();
-             break;
-         }
-         target = target.parentNode;
-    }
-    return false;
+    _('game-field-container').appendChild(gameField);
+    return gameField;
 }
 
-function chooseTheSymbol() {
-    console.log('row: ' + target.dataset.row + ' col: ' + target.dataset.col);
-    if (!target.innerHTML) {
-        target.innerHTML = nextSymbol;
-        nextSymbol = target.innerHTML == x ? o : x;
-        var victory = checkTheWin(target.innerHTML.parentNode);
-        if (victory) {
-            handleWinner(target.innerHTML);
+function turnHandler(cell) {
+    if (!cell.innerHTML) {
+        cell.innerHTML = nextSymbol;
+        nextSymbol = cell.innerHTML == x ? o : x;
+        if (isCellInTheVictoryLine(cell)) {
+            onWIn(cell);
         }
     }
 }
 
-// TODO 2 на основании dataset написать алгоритм перебора ячеек для поиска победит
-function handleWinner(symbol) {
+function onWIn(cell) {
+    var symbol = cell.innerHTML;
     var spanId = symbol == x ? 'x-score' : 'o-score';
-    var span = document.getElementById(spanId);
+    var span = _(spanId);
     span.innerHTML = +span.innerHTML + 1;
     gameField.onclick = function () {
         return false;
@@ -58,8 +57,7 @@ function handleWinner(symbol) {
     nextSymbol = symbol;
 }
 
-var resetButton = document.getElementById('reset-button');
-resetButton.onclick = function () {
+_('reset-button').onclick = function () {
     gameField.onclick = turnHandler;
     var tdList = gameField.getElementsByTagName('td');
     for (var i = 0; i < tdList.length; i++) {
@@ -68,10 +66,20 @@ resetButton.onclick = function () {
     gameField.className = '';
 };
 
-function checkTheWin() {
-    var rowNum = target.dataset.row;
+function isCellInTheVictoryLine(cell) {
+    var rowNum = cell.dataset.row;
+    var colNum = cell.dataset.col;
+    console.log(rowNum + ',' + colNum);
+    for (var i = 0; i < 3; i++) {
+        // проверка по горизонтали
+        if (colNum.innerHTML == colNum[i].innerHTML)
+        
+    }
 }
 
+function _(id) {
+    return document.getElementById(id);
+}
 
 
 
