@@ -5,7 +5,9 @@ var nextSymbol = x;
 
 var gameField = createGameField();
 
-gameField.onclick = function(event) {
+gameField.onclick = onclickHandler;
+
+function onclickHandler(event) {
     var cell = event.target;
     while (cell != gameField) {
         if (cell.tagName == 'TD') {
@@ -15,7 +17,7 @@ gameField.onclick = function(event) {
         cell = cell.parentNode;
     }
     return false;
-};
+}
 
 function createGameField() {
     var gameField = document.createElement('table');
@@ -58,7 +60,7 @@ function onWIn(cell) {
 }
 
 _('reset-button').onclick = function () {
-    gameField.onclick = turnHandler;
+    gameField.onclick = onclickHandler;
     var tdList = gameField.getElementsByTagName('td');
     for (var i = 0; i < tdList.length; i++) {
         tdList[i].innerHTML = '';
@@ -67,19 +69,52 @@ _('reset-button').onclick = function () {
 };
 
 function isCellInTheVictoryLine(cell) {
+    var res;
+    if (!cell.innerHTML) {
+        return false;
+    }
     var rowNum = cell.dataset.row;
     var colNum = cell.dataset.col;
-    console.log(rowNum + ',' + colNum);
+    var cols = gameField.querySelectorAll('td[data-col="' + colNum + '"]');
+    var rows = gameField.querySelectorAll('td[data-row="' + rowNum + '"]');
+
+    res = true;
     for (var i = 0; i < 3; i++) {
-        // проверка по горизонтали
-        if (colNum.innerHTML == colNum[i].innerHTML)
-        
+        if (cell.innerHTML !== cols[i].innerHTML) {
+            res = false;
+            break;
+        }
     }
+    if (res) return true;
+
+    res = true;
+    for (var i = 0; i < 3; i++) {
+        if (cell.innerHTML !== rows[i].innerHTML) {
+            res = false;
+            break;
+        }
+    }
+    if (res) return true;
+
+    res = true;
+    for (var i = 0; i < 3; i++) {
+        var td = gameField.querySelector('td[data-row="' + i + '"][data-col="' + i + '"]');
+        if (cell.innerHTML !== td.innerHTML) {
+            res = false;
+            break;
+        }
+    }
+    if (res) return true;
+
+    for (var i = 0, j = 2; i < 3 && j >= 0; i++, j--) {
+        var td = gameField.querySelector('td[data-row="' + i + '"][data-col="' + j + '"]');
+        if (cell.innerHTML !== td.innerHTML) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function _(id) {
     return document.getElementById(id);
 }
-
-
-
