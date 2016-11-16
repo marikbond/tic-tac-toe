@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #c7dbe2;
+    background-color: #86a183;
     font-family: sans-serif;
     font-size: 20px;
 }
@@ -22,7 +22,7 @@ body {
 
 .scores .score-block {
     display: inline-block;
-    border: 7px solid #323130;
+    border: 7px solid #d54949;
     width: 147px;
     height: 60px;
 }
@@ -43,7 +43,7 @@ body {
 #game-field tr td {
     width: 100px;
     height: 100px;
-    border: 7px solid #323130;
+    border: 7px solid #604242;
     text-align: center;
     vertical-align: middle;
     font-size: 80px;
@@ -53,20 +53,28 @@ body {
     display: block;
     width: 328px;
     height: 50px;
-    border: 7px solid #75bf78;
+    border: 7px solid #d54949;
     background-color: transparent;
     font-size: 30px;
     letter-spacing: 7px;
-    color: #75bf78;
+    color: #d54949;
     margin: 10px auto 0 auto;
 }
 
 #reset-button:hover {
-    border: 7px solid #64ab67;
-    color: #64ab67;
+    border: 7px solid #c22c2c;
+    color: #c22c2c;
 }
 
 .disabled-field, .disabled-field > td {
     color: #908c93;
     border-color: #908c93;
+}
+
+#winner-block {
+    border-color: darkgreen;
+}
+
+#looser-block {
+    border-color: #c22c2c;
 }

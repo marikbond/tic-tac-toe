@@ -12,6 +12,7 @@ function onclickHandler(event) {
     while (cell != gameField) {
         if (cell.tagName == 'TD') {
             turnHandler(cell);
+            changerScoreBlockColor();
             break;
         }
         cell = cell.parentNode;
@@ -34,6 +35,23 @@ function createGameField() {
     }
     _('game-field-container').appendChild(gameField);
     return gameField;
+}
+
+function changerScoreBlockColor() {
+    var xScoreBlock = document.getElementsByClassName('x-score-block');
+    var oScoreBlock = document.getElementsByClassName('o-score-block');
+    var xScore = _('x-score').innerHTML;
+    var oScore = _('o-score').innerHTML;
+    if (xScore > oScore) {
+        xScoreBlock.id = 'winner-block';
+        oScoreBlock.id = 'looser-block';
+    } else if (xScore < oScore) {
+        xScoreBlock.id = 'looser-block';
+        oScoreBlock.id = 'winner-block';
+    } else {
+        xScoreBlock.id = 'looser-block';
+        xScoreBlock.id = 'looser-block';
+    }
 }
 
 function turnHandler(cell) {
