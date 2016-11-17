@@ -12,7 +12,6 @@ function onclickHandler(event) {
     while (cell != gameField) {
         if (cell.tagName == 'TD') {
             turnHandler(cell);
-            changerScoreBlockColor();
             break;
         }
         cell = cell.parentNode;
@@ -20,7 +19,22 @@ function onclickHandler(event) {
     return false;
 }
 
-function createGameField() {
+var createButton =  _('field-creater');
+createButton.onclick = selectGameShape();
+
+function selectGameShape () {
+    var select = form.elements.shape;
+    var shape;
+    for (var i = 0; i < select.options.length; i++) {
+        var option = select.options[i];
+        if(option.selected) {
+            shape = option.value;
+            createGameField(shape);
+        }
+    }
+}
+
+function createGameField(shape) {
     var gameField = document.createElement('table');
     gameField.id = "game-field";
     for (var i = 0; i < 3; i++) {
@@ -37,22 +51,6 @@ function createGameField() {
     return gameField;
 }
 
-function changerScoreBlockColor() {
-    var xScoreBlock = document.getElementsByClassName('x-score-block');
-    var oScoreBlock = document.getElementsByClassName('o-score-block');
-    var xScore = _('x-score').innerHTML;
-    var oScore = _('o-score').innerHTML;
-    if (xScore > oScore) {
-        xScoreBlock.id = 'winner-block';
-        oScoreBlock.id = 'looser-block';
-    } else if (xScore < oScore) {
-        xScoreBlock.id = 'looser-block';
-        oScoreBlock.id = 'winner-block';
-    } else {
-        xScoreBlock.id = 'looser-block';
-        xScoreBlock.id = 'looser-block';
-    }
-}
 
 function turnHandler(cell) {
     if (!cell.innerHTML) {
