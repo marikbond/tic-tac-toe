@@ -2,12 +2,11 @@
 var x = 'X';
 var o = 'O';
 var nextSymbol = x;
+var lastWinner = null;
+var gameField = null;
 
-var gameField = createGameField();
-
-gameField.onclick = onclickHandler;
-
-function onclickHandler(event) {
+function onClickHandler(event) {
+    if (nextSymbol === 'none') return false;
     var cell = event.target;
     while (cell != gameField) {
         if (cell.tagName == 'TD') {
@@ -16,30 +15,25 @@ function onclickHandler(event) {
         }
         cell = cell.parentNode;
     }
-    return false;
 }
 
-var createButton =  _('field-creater');
-createButton.onclick = selectGameShape();
-
-function selectGameShape () {
-    var select = form.elements.shape;
-    var shape;
+_('field-creator').onclick = function () {
+    var select = document.forms.fieldSize.elements.shape;
     for (var i = 0; i < select.options.length; i++) {
         var option = select.options[i];
         if(option.selected) {
-            shape = option.value;
-            createGameField(shape);
+            var size = parseInt(option.value, 10);
+            gameField = createGameField(size, onClickHandler);
         }
     }
-}
+};
 
-function createGameField(shape) {
+function createGameField(size, onClickHandler) {
     var gameField = document.createElement('table');
     gameField.id = "game-field";
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < size; i++) {
         var tableRow = document.createElement('tr');
-        for (var j = 0; j < 3; j++) {
+        for (var j = 0; j < size; j++) {
             var td = document.createElement('td');
             td.dataset.row = i;
             td.dataset.col = j;
@@ -47,7 +41,9 @@ function createGameField(shape) {
         }
         gameField.appendChild(tableRow);
     }
+    _('game-field-container').innerHTML = '';
     _('game-field-container').appendChild(gameField);
+    gameField.onclick = onClickHandler;
     return gameField;
 }
 
@@ -57,78 +53,137 @@ function turnHandler(cell) {
         cell.innerHTML = nextSymbol;
         nextSymbol = cell.innerHTML == x ? o : x;
         if (isCellInTheVictoryLine(cell)) {
-            onWIn(cell);
+            onWin(cell);
         }
     }
 }
 
-function onWIn(cell) {
+function onWin(cell) {
     var symbol = cell.innerHTML;
     var spanId = symbol == x ? 'x-score' : 'o-score';
     var span = _(spanId);
     span.innerHTML = +span.innerHTML + 1;
-    gameField.onclick = function () {
-        return false;
-    };
+    lastWinner = symbol;
     gameField.className = 'disabled-field';
     alert('Win: ' + symbol);
-    nextSymbol = symbol;
+    nextSymbol = 'none';
 }
 
 _('reset-button').onclick = function () {
-    gameField.onclick = onclickHandler;
+    gameField.onclick = onClickHandler;
     var tdList = gameField.getElementsByTagName('td');
     for (var i = 0; i < tdList.length; i++) {
         tdList[i].innerHTML = '';
     }
     gameField.className = '';
+    nextSymbol = lastWinner;
 };
 
+
 function isCellInTheVictoryLine(cell) {
-    var res;
-    if (!cell.innerHTML) {
-        return false;
-    }
     var rowNum = cell.dataset.row;
     var colNum = cell.dataset.col;
     var cols = gameField.querySelectorAll('td[data-col="' + colNum + '"]');
     var rows = gameField.querySelectorAll('td[data-row="' + rowNum + '"]');
+    var verUpWay = 0;
+    var verDownWay = 0;
+    var horRightWay = 0;
+    var horLeftWay = 0;
+    var leftGiagDown = 0;
+    var leftDiagUp = 0;
+    var rightDiagDown =0;
+    var rightDiagUp = 0;
 
-    res = true;
-    for (var i = 0; i < 3; i++) {
+    for (var i = rowNum; i < rowNum + 5; i++) {
+        if (cols[i] === undefined) break;
         if (cell.innerHTML !== cols[i].innerHTML) {
-            res = false;
             break;
         }
+        verDownWay++;
     }
-    if (res) return true;
+    if (verDownWay === 5) return true;
 
-    res = true;
-    for (var i = 0; i < 3; i++) {
+    for (i = rowNum; i > rowNum - 5; i--) {
+        if (cols[i] === undefined) break;
+        if (cell.innerHTML !== cols[i].innerHTML) {
+            break;
+        }
+        verUpWay++;
+    }
+    if (verUpWay === 5) return true;
+    if (verDownWay + verUpWay - 1 == 5) return true;
+
+
+// TODO решить проблему, когда появляется комбинация из 6. НАЧАЛО ВТОРАЯ ЧАСТЬ - проверка по горизонтали
+// TODO исправить цифру 5, на переменную, которая будет задавать число в зависимости от размера поля
+
+
+    for ( i = colNum; i < colNum + 5; i++) {
+        if (rows[i] === undefined) break;
         if (cell.innerHTML !== rows[i].innerHTML) {
-            res = false;
             break;
         }
+        horRightWay++;
     }
-    if (res) return true;
+    if (horRightWay === 5) return true;
 
-    res = true;
-    for (var i = 0; i < 3; i++) {
-        var td = gameField.querySelector('td[data-row="' + i + '"][data-col="' + i + '"]');
-        if (cell.innerHTML !== td.innerHTML) {
-            res = false;
+    for (i = colNum; i > colNum - 5; i--) {
+        if (rows[i] === undefined) break;
+        if (cell.innerHTML !== rows[i].innerHTML) {
             break;
         }
+        horLeftWay++;
     }
-    if (res) return true;
+    if (horLeftWay === 5) return true;
+    if (horRightWay + horLeftWay - 1 == 5) return true;
 
-    for (var i = 0, j = 2; i < 3 && j >= 0; i++, j--) {
-        var td = gameField.querySelector('td[data-row="' + i + '"][data-col="' + j + '"]');
+    // ПО ДИАГОНАЛИ
+
+    for (i = colNum, j = rowNum; i < colNum + 5 && j < rowNum + 5; i++, j++) {
+        var td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
+        if (td == undefined || null) break;
         if (cell.innerHTML !== td.innerHTML) {
-            return false;
+            break;
         }
+        leftGiagDown++;
     }
-    return true;
+    if (leftGiagDown === 5) return true;
+
+    for (i = colNum, j = rowNum; i > colNum - 5 && j > rowNum - 5; i--, j--) {
+        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
+        if (td == undefined || null) break;
+        if (cell.innerHTML !== td.innerHTML) {
+            break;
+        }
+        leftDiagUp++;
+    }
+    if (leftDiagUp === 5) return true;
+    if (leftDiagUp + leftGiagDown - 1 == 5) return true;
+
+
+    // ПО ДИАГОНАЛИ НА ОБОРОТ
+
+    for (i = colNum, j = rowNum; i > colNum - 5 && j < rowNum + 5; i--, j++) {
+        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
+        if (td == undefined || null) break;
+        if (cell.innerHTML !== td.innerHTML) {
+            break;
+        }
+        rightDiagDown++;
+    }
+    if (rightDiagDown === 5) return true;
+
+    for (i = colNum, j = rowNum; i < colNum + 5 && j > rowNum - 5; i++, j--) {
+        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
+        if (td == undefined || null) break;
+        if (cell.innerHTML !== td.innerHTML) {
+            break;
+        }
+        rightDiagUp++;
+    }
+    if (rightDiagUp === 5) return true;
+    if (rightDiagDown + rightDiagUp - 1 == 5) return true;
+    return false;
 }
 
 function _(id) {
