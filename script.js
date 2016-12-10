@@ -58,6 +58,10 @@ function turnHandler(cell) {
     }
 }
 
+function getCell(i, j) {
+    return gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
+}
+
 function onWin(cell) {
     var symbol = cell.innerHTML;
     var spanId = symbol == x ? 'x-score' : 'o-score';
@@ -80,34 +84,78 @@ _('reset-button').onclick = function () {
 };
 
 
+function checkLine(startIndex, cells) {
+    var durations = [1, -1];
+    var result = 1;
+    for (var i = 0; i < durations.length; i++) {
+        var increment = durations[i];
+        var index = startIndex + increment;
+        while (cells[index] && cells[index].innerHTML == cells.innerHTML) {
+            result++;
+            index += increment;
+        }
+    }
+    return result;
+}
+
+function checkHorizontal(targetCell) {
+    console.log(targetCell);
+    return checkLine(targetCell);
+}
+//
+// function checkVertical(????) {
+//     return checkLine(???);
+// }
+//
+// function checkRightDiagonal(???) {
+//     return checkDiagonal(???);
+// }
+
 function isCellInTheVictoryLine(cell) {
+    // для того чтобы не передавать эти переменные как рагументы
+    // их можно передать в одно мобъекте как значения свойств.
+    // {
+    //   row: значение
+    //   .....
+    // }
     var rowNum = cell.dataset.row;
     var colNum = cell.dataset.col;
-    var cols = gameField.querySelectorAll('td[data-col="' + colNum + '"]');
-    var rows = gameField.querySelectorAll('td[data-row="' + rowNum + '"]');
-    var verUpWay = 0;
-    var verDownWay = 0;
-    var horRightWay = 0;
-    var horLeftWay = 0;
-    var leftGiagDown = 0;
-    var leftDiagUp = 0;
-    var rightDiagDown =0;
-    var rightDiagUp = 0;
+    var colCells = gameField.querySelectorAll('td[data-col="' + colNum + '"]');
+    var rowCells = gameField.querySelectorAll('td[data-row="' + rowNum + '"]');
+    var balbal = 5;
+
+    var targetCell = {
+        col: colNum,
+        row: rowNum
+    };
+    console.log(targetCell);
+
+    var result = checkHorizontal(targetCell);
+    if (result.lenght >= balbal) {
+
+    }
+    // checkVertical();
+    // checkRightDiagonal();
+    // checkLeftDiagonal();
+
+
+    var horizontal = checkLine(colNum, rows);
+    if (horizontal >= 5) return true;
+    var vertical = checkLine(rowNum, cols);
+    if (vertical) return true;
+
+
+
+
 
     for (var i = rowNum; i < rowNum + 5; i++) {
-        if (cols[i] === undefined) break;
-        if (cell.innerHTML !== cols[i].innerHTML) {
-            break;
-        }
+        if (!cols[i] || cell.innerHTML !== cols[i].innerHTML) break;
         verDownWay++;
     }
     if (verDownWay === 5) return true;
 
-    for (i = rowNum; i > rowNum - 5; i--) {
-        if (cols[i] === undefined) break;
-        if (cell.innerHTML !== cols[i].innerHTML) {
-            break;
-        }
+    for (var i = rowNum; i > rowNum - 5; i--) {
+        if (!cols[i] || cell.innerHTML !== cols[i].innerHTML) break;
         verUpWay++;
     }
     if (verUpWay === 5) return true;
@@ -118,16 +166,14 @@ function isCellInTheVictoryLine(cell) {
 // TODO исправить цифру 5, на переменную, которая будет задавать число в зависимости от размера поля
 
 
-    for ( i = colNum; i < colNum + 5; i++) {
-        if (rows[i] === undefined) break;
-        if (cell.innerHTML !== rows[i].innerHTML) {
-            break;
-        }
+    for (var i = colNum; i < colNum + 5; i++) {
+        if (!rows[i] || cell.innerHTML !== rows[i].innerHTML) break;
         horRightWay++;
     }
+
     if (horRightWay === 5) return true;
 
-    for (i = colNum; i > colNum - 5; i--) {
+    for (var i = colNum; i > colNum - 5; i--) {
         if (rows[i] === undefined) break;
         if (cell.innerHTML !== rows[i].innerHTML) {
             break;
@@ -138,23 +184,16 @@ function isCellInTheVictoryLine(cell) {
     if (horRightWay + horLeftWay - 1 == 5) return true;
 
     // ПО ДИАГОНАЛИ
-
-    for (i = colNum, j = rowNum; i < colNum + 5 && j < rowNum + 5; i++, j++) {
-        var td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
-        if (td == undefined || null) break;
-        if (cell.innerHTML !== td.innerHTML) {
-            break;
-        }
+    for (var i = colNum, j = rowNum; i < colNum + 5 && j < rowNum + 5; i++, j++) {
+        var td = getCell(i, j);
+        if (!td || cell.innerHTML !== td.innerHTML) break;
         leftGiagDown++;
     }
     if (leftGiagDown === 5) return true;
 
-    for (i = colNum, j = rowNum; i > colNum - 5 && j > rowNum - 5; i--, j--) {
-        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
-        if (td == undefined || null) break;
-        if (cell.innerHTML !== td.innerHTML) {
-            break;
-        }
+    for (index = colNum, j = rowNum; index > colNum - 5 && j > rowNum - 5; index--, j--) {
+        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + index + '"]');
+        if (!td || cell.innerHTML !== td.innerHTML) break;
         leftDiagUp++;
     }
     if (leftDiagUp === 5) return true;
@@ -163,7 +202,7 @@ function isCellInTheVictoryLine(cell) {
 
     // ПО ДИАГОНАЛИ НА ОБОРОТ
 
-    for (i = colNum, j = rowNum; i > colNum - 5 && j < rowNum + 5; i--, j++) {
+    for (var i = colNum, j = rowNum; i > colNum - 5 && j < rowNum + 5; i--, j++) {
         td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
         if (td == undefined || null) break;
         if (cell.innerHTML !== td.innerHTML) {
@@ -173,8 +212,8 @@ function isCellInTheVictoryLine(cell) {
     }
     if (rightDiagDown === 5) return true;
 
-    for (i = colNum, j = rowNum; i < colNum + 5 && j > rowNum - 5; i++, j--) {
-        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
+    for (index = colNum, j = rowNum; index < colNum + 5 && j > rowNum - 5; index++, j--) {
+        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + index + '"]');
         if (td == undefined || null) break;
         if (cell.innerHTML !== td.innerHTML) {
             break;
