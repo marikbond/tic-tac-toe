@@ -115,7 +115,7 @@ function isCellInTheVictoryLine(cell) {
     var colNum = cell.dataset.col;
     var colCells = gameField.querySelectorAll('td[data-col="' + colNum + '"]');
     var rowCells = gameField.querySelectorAll('td[data-row="' + rowNum + '"]');
-    var balbal = 5;
+    var minSymbolDurationNeededForVictory = 5;
 
     var params = {
         rowNum: rowNum,
@@ -125,97 +125,20 @@ function isCellInTheVictoryLine(cell) {
     };
 
     var result = checkHorizontalLine(params);
-    if (result.lenght >= balbal) {
-
+    if (result >= minSymbolDurationNeededForVictory) {
+        return true;
     }
     checkVerticalLine(params);
-    // checkRightDiagonal();
-    // checkLeftDiagonal();
-
-
-    var horizontal = checkLine(colNum, rows);
-    if (horizontal >= 5) return true;
-    var vertical = checkLine(rowNum, cols);
-    if (vertical) return true;
-
-
-
-
-
-    for (var i = rowNum; i < rowNum + 5; i++) {
-        if (!cols[i] || cell.innerHTML !== cols[i].innerHTML) break;
-        verDownWay++;
-    }
-    if (verDownWay === 5) return true;
-
-    for (var i = rowNum; i > rowNum - 5; i--) {
-        if (!cols[i] || cell.innerHTML !== cols[i].innerHTML) break;
-        verUpWay++;
-    }
-    if (verUpWay === 5) return true;
-    if (verDownWay + verUpWay - 1 == 5) return true;
-
-
-// TODO решить проблему, когда появляется комбинация из 6. НАЧАЛО ВТОРАЯ ЧАСТЬ - проверка по горизонтали
-// TODO исправить цифру 5, на переменную, которая будет задавать число в зависимости от размера поля
-
-
-    for (var i = colNum; i < colNum + 5; i++) {
-        if (!rows[i] || cell.innerHTML !== rows[i].innerHTML) break;
-        horRightWay++;
+    if (result >= minSymbolDurationNeededForVictory) {
+        return true;
     }
 
-    if (horRightWay === 5) return true;
 
-    for (var i = colNum; i > colNum - 5; i--) {
-        if (rows[i] === undefined) break;
-        if (cell.innerHTML !== rows[i].innerHTML) {
-            break;
-        }
-        horLeftWay++;
-    }
-    if (horLeftWay === 5) return true;
-    if (horRightWay + horLeftWay - 1 == 5) return true;
+    // var horizontal = checkLine(colNum, rows);
+    // if (horizontal >= 5) return true;
+    // var vertical = checkLine(rowNum, cols);
+    // if (vertical) return true;
 
-    // ПО ДИАГОНАЛИ
-    for (var i = colNum, j = rowNum; i < colNum + 5 && j < rowNum + 5; i++, j++) {
-        var td = getCell(i, j);
-        if (!td || cell.innerHTML !== td.innerHTML) break;
-        leftGiagDown++;
-    }
-    if (leftGiagDown === 5) return true;
-
-    for (index = colNum, j = rowNum; index > colNum - 5 && j > rowNum - 5; index--, j--) {
-        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + index + '"]');
-        if (!td || cell.innerHTML !== td.innerHTML) break;
-        leftDiagUp++;
-    }
-    if (leftDiagUp === 5) return true;
-    if (leftDiagUp + leftGiagDown - 1 == 5) return true;
-
-
-    // ПО ДИАГОНАЛИ НА ОБОРОТ
-
-    for (var i = colNum, j = rowNum; i > colNum - 5 && j < rowNum + 5; i--, j++) {
-        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + i + '"]');
-        if (td == undefined || null) break;
-        if (cell.innerHTML !== td.innerHTML) {
-            break;
-        }
-        rightDiagDown++;
-    }
-    if (rightDiagDown === 5) return true;
-
-    for (index = colNum, j = rowNum; index < colNum + 5 && j > rowNum - 5; index++, j--) {
-        td = gameField.querySelector('td[data-row="' + j + '"][data-col="' + index + '"]');
-        if (td == undefined || null) break;
-        if (cell.innerHTML !== td.innerHTML) {
-            break;
-        }
-        rightDiagUp++;
-    }
-    if (rightDiagUp === 5) return true;
-    if (rightDiagDown + rightDiagUp - 1 == 5) return true;
     return false;
 }
 
