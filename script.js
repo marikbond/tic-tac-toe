@@ -85,10 +85,10 @@ _('reset-button').onclick = function () {
 
 
 function checkLine(startIndex, cells) {
-    var durations = [1, -1];
+    var directionIncrement = [1, -1];
     var result = 1;
-    for (var i = 0; i < durations.length; i++) {
-        var increment = durations[i];
+    for (var i = 0; i <  directionIncrement.length; i++) {
+        var increment =  directionIncrement[i];
         var index = startIndex + increment;
         while (cells[index] && cells[index].innerHTML == cells.innerHTML) {
             result++;
@@ -98,43 +98,37 @@ function checkLine(startIndex, cells) {
     return result;
 }
 
-function checkHorizontal(targetCell) {
-    console.log(targetCell);
-    return checkLine(targetCell);
+function checkHorizontalLine(params) {
+    return checkLine(params.colNum, params.rowCells);
 }
-//
-// function checkVertical(????) {
-//     return checkLine(???);
-// }
+
+    function checkVerticalLine(params) {
+     return checkLine(params.rowNum, params.colCells);
+ }
 //
 // function checkRightDiagonal(???) {
 //     return checkDiagonal(???);
 // }
 
 function isCellInTheVictoryLine(cell) {
-    // для того чтобы не передавать эти переменные как рагументы
-    // их можно передать в одно мобъекте как значения свойств.
-    // {
-    //   row: значение
-    //   .....
-    // }
     var rowNum = cell.dataset.row;
     var colNum = cell.dataset.col;
     var colCells = gameField.querySelectorAll('td[data-col="' + colNum + '"]');
     var rowCells = gameField.querySelectorAll('td[data-row="' + rowNum + '"]');
     var balbal = 5;
 
-    var targetCell = {
-        col: colNum,
-        row: rowNum
+    var params = {
+        rowNum: rowNum,
+        colNum: colNum,
+        rowCells: rowCells,
+        colCells: colCells
     };
-    console.log(targetCell);
 
-    var result = checkHorizontal(targetCell);
+    var result = checkHorizontalLine(params);
     if (result.lenght >= balbal) {
 
     }
-    // checkVertical();
+    checkVerticalLine(params);
     // checkRightDiagonal();
     // checkLeftDiagonal();
 
