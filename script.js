@@ -98,6 +98,24 @@ function checkLine(startIndex, cells, targetCell) {
     return result;
 }
 
+function deterlineLengthOfWinnerLine(rowCells) {
+    switch (rowCells.length) {
+        case 3:
+            var minSymbolDurationNeededForVictory = 3;
+            break;
+        case 9:
+            minSymbolDurationNeededForVictory = 5;
+            break;
+        case 15:
+            minSymbolDurationNeededForVictory = 7;
+            break;
+        case 30:
+            minSymbolDurationNeededForVictory = 9;
+            break;
+    }
+    return minSymbolDurationNeededForVictory;
+}
+
 function checkHorizontalLine(params) {
     return checkLine(params.colNum, params.rowCells, params.targetCell);
 }
@@ -106,7 +124,7 @@ function checkVerticalLine(params) {
     return checkLine(params.rowNum, params.colCells, params.targetCell);
 }
 
-function checkDiagonalLines(params) {
+function checkRightDiagonalLines(params) {
     var directionIncrement = [1, -1];
     var result = [params.targetCell];
     for (var i = 0; i < directionIncrement.length; i++) {
@@ -121,13 +139,17 @@ function checkDiagonalLines(params) {
             cell = getCell(rowIndex, colIndex);
         }
     }
-    if (result >= 5) return result;
+    return result;
+}
 
-    for (i = 0; i < directionIncrement.length; i++) {
-        increment = directionIncrement[i];
-        colIndex = params.colNum - increment;
-        rowIndex = params.rowNum + increment;
-        cell = getCell(rowIndex, colIndex);
+function checkLeftDiagonalLine(params) {
+    var directionIncrement = [1, -1];
+    var result = [params.targetCell];
+    for (var i = 0; i < directionIncrement.length; i++) {
+        var increment = directionIncrement[i];
+        var colIndex = params.colNum - increment;
+        var rowIndex = params.rowNum + increment;
+        var cell = getCell(rowIndex, colIndex);
         while (cell && cell.innerHTML === params.targetCell.innerHTML) {
             result.push(cell);
             colIndex -= increment;
@@ -143,7 +165,7 @@ function isCellInTheVictoryLine(cell, onWin) {
     var colNum = cell.dataset.col;
     var colCells = gameField.querySelectorAll('td[data-col="' + colNum + '"]');
     var rowCells = gameField.querySelectorAll('td[data-row="' + rowNum + '"]');
-    var minSymbolDurationNeededForVictory = 5;
+    var  minSymbolDurationNeededForVictory = deterlineLengthOfWinnerLine(rowCells);
     var params = {
         rowNum: +rowNum,
         colNum: +colNum,
@@ -151,22 +173,14 @@ function isCellInTheVictoryLine(cell, onWin) {
         colCells: colCells,
         targetCell: cell
     };
-    var result;
 
-    result = checkHorizontalLine(params);
-    if (result.length >= minSymbolDurationNeededForVictory) {
-        onWin(cell, result);
-        return;
-    }
-    result = checkVerticalLine(params);
-    if (result.length >= minSymbolDurationNeededForVictory) {
-        onWin(cell, result);
-        return;
-    }
-    result = checkDiagonalLines(params);
-    if (result.length >= minSymbolDurationNeededForVictory) {
-        onWin(cell, result);
-        return;
+    var waysArr = [checkHorizontalLine(params), checkVerticalLine(params), checkRightDiagonalLines(params), checkLeftDiagonalLine(params)];
+    for (var i = 0; i < waysArr.length; i++) {
+        var result = waysArr[i];
+        if (result.length >= minSymbolDurationNeededForVictory) {
+            onWin(cell, result);
+            return;
+        }
     }
     return false;
 }
