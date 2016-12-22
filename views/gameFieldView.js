@@ -4,11 +4,11 @@ function getCellSize(size) {
         case 3:
             return 107;
         case 9:
-            return 80;
+            return 70;
         case 15:
-            return 50;
+            return 32;
         case 30:
-            return 25;
+            return 15;
     }
 }
 
@@ -22,8 +22,8 @@ function createGameField(size, onClickHandler) {
             var td = document.createElement('td');
             td.dataset.row = i;
             td.dataset.col = j;
-            td.style.width = cellSize;
-            td.style.height = cellSize;
+            td.style.width = cellSize + 'px';
+            td.style.height = cellSize + 'px';
             tableRow.appendChild(td);
         }
         gameField.appendChild(tableRow);
