@@ -7,12 +7,11 @@ function createGameField(size, onClickHandler) {
         for (var j = 0; j < size; j++) {
             var td = document.createElement('td');
             var fieldConfig = config.gameField;
+            var cellSize = fieldConfig[size].cellSize + 'px';
             td.dataset.row = i;
             td.dataset.col = j;
-            var cellSize = fieldConfig[size].cellSize + 'px';
             td.style.width = cellSize;
             td.style.height = cellSize;
-            td.style.borderWidth = fieldConfig[size].borderWidth + 'px';
             td.style.fontSize = fieldConfig[size].fontSize + 'px';
             tableRow.appendChild(td);
         }
