@@ -17,8 +17,6 @@ function createGameField(size, onClickHandler) {
         }
         gameField.appendChild(tableRow);
     }
-
-
     _('game-field-container').innerHTML = '';
     _('game-field-container').appendChild(gameField);
     gameField.onclick = onClickHandler;

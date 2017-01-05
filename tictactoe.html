@@ -3,30 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <select id="game-size">
-            <option value="3" selected>3x3</option>
-            <option value="9">9x9</option>
-            <option value="15">15x15</option>
-            <option value="30">30x30</option>
-        </select>
-        <button id="field-creator" type="button" value="CREATE">CREATE</button>
-        <div class="scores">
-            <div class="score-block">
-                <span>X-SCORE</span>
-                <span id="x-score">0</span>
+        <div class="row">
+            <div class="col-lg-7">
+                <button id="reset-button" type="button" value="reset">RESET</button>
             </div>
-            <div class="score-block">
-                <span>O-SCORE</span>
-                <span id="o-score">0</span>
+            <div class="col-lg-5">
+                <div class="scores">
+                    <div class="well score-block col-lg-6">
+                        <span>X-SCORE</span>
+                        <span id="x-score">0</span>
+                    </div>
+                    <div class="well score-block col-lg-6">
+                        <span>O-SCORE</span>
+                        <span id="o-score">0</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="game-field-container"></div>
-        <button id="reset-button" type="button" value="reset">RESET</button>
+        <div class="row">
+            <div class="col-lg-7">
+                <select id="game-size">
+                    <option value="3" selected>3x3</option>
+                    <option value="9">9x9</option>
+                    <option value="15">15x15</option>
+                    <option value="30">30x30</option>
+                </select>
+                <button id="field-creator" type="button" value="CREATE">CREATE</button>
+                <div id="game-field-container"></div>
+            </div>
+            <div class="col-lg-5">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content highlight" id="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">...</div>
+                        <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- libs -->
+    <script src="resources/jquery/jquery.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <!-- application -->
     <script src="configs/config.js"></script>
     <script src="utils/domUtils.js"></script>
     <script src="services/gameFieldService.js"></script>
