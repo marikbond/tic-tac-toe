@@ -1,8 +1,14 @@
 var config = {
     gameField: {
-        '3': {cellSize: 150, fontSize: 80},
-        '9': {cellSize: 58, fontSize: 40},
-        '15': {cellSize: 36, fontSize: 25},
-        '30': {cellSize: 18, fontSize: 12}
+        '3': {fieldWidth: '60%', fontSize: 80},
+        '9': {fieldWidth: '60%', fontSize: 40},
+        '15': {fieldWidth: '70%', fontSize: 25},
+        '30': {fieldWidth: '80%', fontSize: 12}
+    },
+    X: {
+        color: 'red'
+    },
+    O: {
+        color: 'blue'
     }
 };

@@ -11,19 +11,21 @@ function onClickHandler(event) {
     }
 }
 
+function turnHandler(cell) {
+    if (!cell.innerHTML) {
+        var currentSymbol = nextSymbol;
+        cell.innerHTML = currentSymbol;
+        cell.style.color = config[currentSymbol].color;
+        nextSymbol = currentSymbol == x ? o : x;
+        isCellInTheVictoryLine(cell, onWin);
+    }
+}
+
 _('field-creator').onclick = function () {
     var gameSizeSelect = document.getElementById('game-size');
     var gameSize = +gameSizeSelect.options[gameSizeSelect.selectedIndex].value;
     gameField = createGameField(gameSize, onClickHandler);
 };
-
-function turnHandler(cell) {
-    if (!cell.innerHTML) {
-        cell.innerHTML = nextSymbol;
-        nextSymbol = cell.innerHTML == x ? o : x;
-        isCellInTheVictoryLine(cell, onWin);
-    }
-}
 
 function onWin(cell, cells) {
     for (var i = 0; i < cells.length; i++) {

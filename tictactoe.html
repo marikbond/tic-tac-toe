@@ -7,34 +7,75 @@
     <link href="resources/css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Gomoku</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">All games</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Mark</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <div class="row">
             <div class="col-lg-7">
-                <button id="reset-button" type="button" value="reset">RESET</button>
+                <div class="well">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="game-size">Game Size:</label>
+                            <select id="game-size" class="form-control">
+                                <option value="3" selected>3x3</option>
+                                <option value="9">9x9</option>
+                                <option value="15">15x15</option>
+                                <option value="30">30x30</option>
+                            </select>
+                        </div>
+                        <button id="field-creator" class="btn btn-default" type="button">CREATE</button>
+                        <button id="reset-button" class="btn btn-default pull-right" type="button">RESET</button>
+                    </form>
+                </div>
             </div>
             <div class="col-lg-5">
-                <div class="scores">
-                    <div class="well score-block col-lg-6">
-                        <span>X-SCORE</span>
-                        <span id="x-score">0</span>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <span>X-SCORE</span>
+                            </div>
+                            <div class="panel-footer">
+                                <span id="x-score">0</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="well score-block col-lg-6">
-                        <span>O-SCORE</span>
-                        <span id="o-score">0</span>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <span>O-SCORE</span>
+                            </div>
+                            <div class="panel-footer">
+                                <span id="o-score">0</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-7">
-                <select id="game-size">
-                    <option value="3" selected>3x3</option>
-                    <option value="9">9x9</option>
-                    <option value="15">15x15</option>
-                    <option value="30">30x30</option>
-                </select>
-                <button id="field-creator" type="button" value="CREATE">CREATE</button>
-                <div id="game-field-container"></div>
+                <div id="game-field-container">
+                    <!-- AUTO GENERATED GAME FIELD -->
+                </div>
             </div>
             <div class="col-lg-5">
                 <div>
@@ -45,7 +86,7 @@
                         <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
                     </ul>
                     <!-- Tab panes -->
-                    <div class="tab-content highlight" id="tab-content">
+                    <div class="tab-content g-tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">...</div>
                         <div role="tabpanel" class="tab-pane" id="profile">...</div>
                         <div role="tabpanel" class="tab-pane" id="messages">...</div>
