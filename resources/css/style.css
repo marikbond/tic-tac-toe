@@ -19,8 +19,60 @@
 
 .panel {
     text-align: center;
+    font-weight: bold;
 }
 
 .panel .panel-body {
     padding: 5px;
 }
+
+.form-inline .form-control {
+    width: 130px;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: #e7e7e7;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar {
+   background-color: #337ab7;
+}
+
+.avatar-logo {
+    margin-right: -15px;
+}
+
+.avatar {
+    width: 25px;
+}
+
+.chat-messege-block {
+    border-radius: 5px;
+    background-color: #71b2ea;
+    padding: 5px;
+    color: #fff;
+}
+
+.chat-time {
+    color: #949494;
+    font-size: 0.8em;
+}
+
+.user-messege {
+    margin: 5px 0;
+}
+
+.typing-field {
+    background-color: black;
+    width: 100%;
+    height: 60px;
+}
+

@@ -19,9 +19,14 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">All games</a></li>
+                    <li><a class="white-link" href="#">All games</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#" class="avatar-logo">
+                            <img src="images/profile-photo.jpg" class="avatar" alt="">
+                        </a>
+                    </li>
                     <li><a href="#">Mark</a></li>
                 </ul>
             </div>
@@ -81,15 +86,28 @@
                 <div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Chat</a></li>
+                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">History</a></li>
+                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Prefernces</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content g-tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="home">...</div>
-                        <div role="tabpanel" class="tab-pane" id="profile">...</div>
-                        <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                        <div role="tabpanel" class="tab-pane active" id="Chat">
+                            <div class="user-messege clearfix">
+                                <div class="col-lg-10">
+                                    <div class="chat-messege-block"><p>Hey! I will rock you!<br>Lolollol</p></div>
+                                </div>
+                                <div class="col-lg-2"><p class="chat-time">11:13<p></div>
+                            </div><div class="user-messege clearfix">
+                                <div class="col-lg-10">
+                                    <div class="chat-messege-block"><p>Hey! I will rock you!<br>Lolollol</p></div>
+                                </div>
+                                <div class="col-lg-2"><p class="chat-time">11:13<p></div>
+                            </div>
+                            <div class="typing-field navbar-fixed-bottom"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="History">...</div>
+                        <div role="tabpanel" class="tab-pane" id="Preferences">...</div>
                     </div>
                 </div>
             </div>

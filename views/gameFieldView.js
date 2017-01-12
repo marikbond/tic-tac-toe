@@ -10,7 +10,6 @@ function createGameField(size, onClickHandler) {
     _('game-field-container').appendChild(gameField);
     var fieldWidth = parseInt(getComputedStyle(gameField).width);
     var cellSize = fieldWidth / size;
-    console.log(cellSize);
     for (var i = 0; i < size; i++) {
         var tableRow = document.createElement('tr');
         for (var j = 0; j < size; j++) {
