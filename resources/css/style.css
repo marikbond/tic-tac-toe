@@ -26,7 +26,7 @@
     padding: 5px;
 }
 
-.form-inline .form-control {
+#game-size {
     width: 130px;
 }
 
@@ -70,9 +70,11 @@
     margin: 5px 0;
 }
 
-.typing-field {
-    background-color: black;
-    width: 100%;
-    height: 60px;
+#typing-field {
+    margin-bottom: 10px;
+}
+
+.messenger-avatar {
+    width: 15px;
 }
 

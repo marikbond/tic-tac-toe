@@ -83,32 +83,33 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                <div>
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Chat</a></li>
-                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">History</a></li>
-                        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Prefernces</a></li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content g-tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="Chat">
-                            <div class="user-messege clearfix">
-                                <div class="col-lg-10">
-                                    <div class="chat-messege-block"><p>Hey! I will rock you!<br>Lolollol</p></div>
-                                </div>
-                                <div class="col-lg-2"><p class="chat-time">11:13<p></div>
-                            </div><div class="user-messege clearfix">
-                                <div class="col-lg-10">
-                                    <div class="chat-messege-block"><p>Hey! I will rock you!<br>Lolollol</p></div>
-                                </div>
-                                <div class="col-lg-2"><p class="chat-time">11:13<p></div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Chat</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">History</a></li>
+                    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Prefernces</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content g-tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="Chat">
+                        <div class="col-lg-12">
+                            <div class="input-group" id="typing-field">
+                                <input type="text" class="form-control" placeholder="Enter Your messege">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">Send</button>
+                                </span>
                             </div>
-                            <div class="typing-field navbar-fixed-bottom"></div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="History">...</div>
-                        <div role="tabpanel" class="tab-pane" id="Preferences">...</div>
+                        <div class="user-messege clearfix">
+                            <div class="col-lg-1 messenger-avatar"><img src="images/profile-photo.jpg" alt=""></div>
+                            <div class="col-lg-10">
+                                <div class="chat-messege-block"><p>Hey! I will rock you!<br>Lolollol</p></div>
+                            </div>
+                            <div class="col-lg-1"><p class="chat-time pull-left">11:13<p></div>
+                        </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane" id="History">...</div>
+                    <div role="tabpanel" class="tab-pane" id="Preferences">...</div>
                 </div>
             </div>
         </div>
