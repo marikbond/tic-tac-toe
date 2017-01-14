@@ -74,7 +74,10 @@
     margin-bottom: 10px;
 }
 
-.messenger-avatar {
-    width: 15px;
+.messenger-avatar img {
+    border: 1px solid #fff;
+    width: 25px;
+    height: 25px;
 }
+
 
