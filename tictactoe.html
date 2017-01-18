@@ -92,20 +92,41 @@
                 <!-- Tab panes -->
                 <div class="tab-content g-tab-content">
                     <div role="tabpanel" class="tab-pane active" id="Chat">
-                        <div class="col-lg-12">
-                            <div class="input-group" id="typing-field">
+                        <div class="chat-controls">
+                            <div class="input-group well" id="typing-field">
                                 <input type="text" class="form-control" placeholder="Enter Your messege">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">Send</button>
                                 </span>
                             </div>
                         </div>
-                        <div class="user-messege clearfix">
-                            <div class="col-lg-1 messenger-avatar"><img src="images/profile-photo.jpg" alt=""></div>
-                            <div class="col-lg-10">
-                                <div class="chat-messege-block"><p>Hey! I will rock you!<br>Lolollol</p></div>
+                        <div class="chat-messages-block">
+                            <div class="chat-message-container">
+                                <img class="chat-avatar" src="images/profile-photo.jpg">
+                                <div class="chat-message-container">
+                                    <div class="chat-message my-messege">Hey. You juset reminded me my childhood. A speacially this game. I love it</div>
+                                    <time class="chat-time">11:13</time>
+                                </div>
+                                <div class="chat-message-container">
+                                    <div class="chat-message my-messege">
+                                        Message 1 or maybe 2, I don't know honestly.<br>
+                                        Lorem ipsum dollar ya lyublyu.
+                                    </div>
+                                    <time class="chat-time">11:14</time>
+                                </div>
                             </div>
-                            <div class="col-lg-1"><p class="chat-time pull-left">11:13<p></div>
+                            <div class="chat-oponent-messege-container">
+                                <div class="chat-message-container">
+                                    <div class="chat-message oponent-messege">What the heck Mark is coding?</div>
+                                    <time class="chat-time">11:13</time>
+                                </div>
+                                <div class="chat-oponent-messege-container">
+                                    <div class="chat-message oponent-messege">
+                                        You know, sometimes he does well, but now..
+                                    </div>
+                                    <time class="chat-time">11:14</time>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="History">...</div>
